@@ -471,7 +471,7 @@ struct SliderView: View {
                                     DragGesture()
                                         .updating($dragOffset) { value, state, _ in
                                             state = value.translation
-                                            print(value.translation)
+//                                            print(value.translation)
                                             
 //                                            DispatchQueue.main.async {
 //                                                position = min(max(newPosition, 0), dragWidth)
@@ -508,7 +508,7 @@ struct SliderView: View {
                 .gesture(
                     TapGesture()
                         .onEnded {
-                            print("X")
+//                            print("X")
                             
 //                                            withAnimation(.easeInOut) {
                             isDragging = false
