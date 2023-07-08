@@ -17,7 +17,7 @@ private struct FrameSize: ViewModifier {
     var lineWidth: CGFloat = 1
     
     func body(content: Content) -> some View {
-        if false && true {
+        if true {
             content
                 .overlay(GeometryReader(content: overlay(for:)))
         } else {

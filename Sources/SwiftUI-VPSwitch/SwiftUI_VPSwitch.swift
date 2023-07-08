@@ -269,6 +269,7 @@ struct SliderView: View {
                                 .clipShape(
                                     RoundedRectangle(cornerRadius: width)
                                 )
+                                .debugFrameSize()
                         }
                             
                         if let img = state_on.backgroundImage {
@@ -314,6 +315,7 @@ struct SliderView: View {
                 .clipShape(
                     RoundedRectangle(cornerRadius: width)
                 )
+                .allowsHitTesting(false)
 
 
 
@@ -469,9 +471,12 @@ struct SliderView: View {
                                     DragGesture()
                                         .updating($dragOffset) { value, state, _ in
                                             state = value.translation
-//                                            print(value.translation)
-                                            //                            position = min(max(newPosition, 0), dragWidth)
-                                            //                            isDragging = true
+                                            print(value.translation)
+                                            
+//                                            DispatchQueue.main.async {
+//                                                position = min(max(newPosition, 0), dragWidth)
+//                                                isDragging = true
+//                                            }
                                         }
                                         .onEnded { value in
 //                                            withAnimation {
@@ -480,11 +485,11 @@ struct SliderView: View {
 //                                            }
                                         }
                                 )
-                            
+                                .debugFrameSizeHighlighted()
+
                         }
                         .frame(width: widgetForegroundIconSize,
                                height: widgetForegroundIconSize)
-                        .debugFrameSizeHighlighted()
                     }
                     .padding(.all, widgetForegroundMargin)
                     .frame(minWidth: 0, maxWidth: .infinity,
@@ -503,6 +508,7 @@ struct SliderView: View {
                 .gesture(
                     TapGesture()
                         .onEnded {
+                            print("X")
                             
 //                                            withAnimation(.easeInOut) {
                             isDragging = false
