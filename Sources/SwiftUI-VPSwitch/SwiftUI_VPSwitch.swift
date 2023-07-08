@@ -338,6 +338,16 @@ struct SliderView: View {
 
         var body: some View {
             ZStack {
+                
+                Image("f_switch_base_glow")
+                    .resizable()
+                    .frame(
+                        width: width * 200 / 100,
+                        height: width * 200 / 100
+                    )
+                    .allowsHitTesting(false)
+                
+                
                 ZStack {
                     RoundedRectangle(cornerRadius: width)
                         .fill(lerpColor(fromColor: state_off.foregroundColor ?? .gray, toColor: state_on.foregroundColor ?? .gray, weight: position))
@@ -395,9 +405,12 @@ struct SliderView: View {
                     
                     
                 }
-                .mask(
-                    RoundedRectangle(cornerRadius: width)
-                    )
+                .frame(
+                    width: width,
+                    height: height
+                )
+                
+                
             }
             .shadow(color: .black.opacity(0.5),
                     radius: width / 20, x: 0, y: 0)
@@ -496,6 +509,9 @@ struct SliderView: View {
                            minHeight: 0, maxHeight: .infinity,
                            alignment: .leading)
                     .animation(.easeInOut)
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: geometry.size.width)
+                    )
 
 //                    VStack {
 //                        Text("\(newPosition)")
