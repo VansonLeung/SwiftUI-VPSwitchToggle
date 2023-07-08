@@ -335,19 +335,21 @@ struct SliderView: View {
         var state_off: SUIVPSwitch.SUIVPSwitchState
         var backgroundImageOrder : SUIVPSwitch.BackgroundImageOrder
 //        @State var imgRes: UIImage?
+        @State var imgGlow: UIImage?
 
         var body: some View {
             ZStack {
                 
-                Image("f_switch_base_glow")
-                    .resizable()
-                    .frame(
-                        width: width * 200 / 100,
-                        height: width * 200 / 100
-                    )
-                    .allowsHitTesting(false)
-                
-                
+                if let img = imgGlow {
+                    Image(uiImage: img)
+                        .resizable()
+                        .frame(
+                            width: width * 200 / 100,
+                            height: width * 200 / 100
+                        )
+                        .allowsHitTesting(false)
+                }
+
                 ZStack {
                     RoundedRectangle(cornerRadius: width)
                         .fill(lerpColor(fromColor: state_off.foregroundColor ?? .gray, toColor: state_on.foregroundColor ?? .gray, weight: position))
@@ -423,6 +425,12 @@ struct SliderView: View {
 //                {
 //                    imgRes = image
 //                }
+                
+                if let path = Bundle.module.path(forResource: "f_switch_base_glow", ofType: "png"),
+                    let image = UIImage(contentsOfFile: path)
+                {
+                    imgGlow = image
+                }
                 
             }
         }
