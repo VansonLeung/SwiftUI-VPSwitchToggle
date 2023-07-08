@@ -6,7 +6,7 @@ Yet another SwiftUI Toggle, but fully customizable!
 
 
 
-https://github.com/VansonLeung/SwiftUI-VPSwitch/assets/1129695/68ebcf3f-33ef-4daa-9f24-b7b04bd965f7
+https://github.com/VansonLeung/SwiftUI-VPSwitch/assets/1129695/37fbcb12-5648-4803-bc32-ae9d90ce415d
 
 
 
