@@ -45,7 +45,8 @@ struct ContentView: View {
                         backgroundColor: .init(red: 71.0/255.0, green: 125.0/255.0, blue: 182.0/255.0),
                         foregroundImage: .init("f_switch_button_sun"),
                         foregroundColor: .init(red: 244.0/255.0, green: 201.0/255.0, blue: 81.0/255.0)
-                    )
+                    ),
+                    backgroundImageOrder: .verticalReversed
                 )
 
                 // Custom image, color and size
@@ -64,8 +65,98 @@ struct ContentView: View {
                         backgroundColor: .init(red: 71.0/255.0, green: 125.0/255.0, blue: 182.0/255.0),
                         foregroundImage: .init("f_switch_button_sun"),
                         foregroundColor: .init(red: 244.0/255.0, green: 201.0/255.0, blue: 81.0/255.0)
-                    )
+                    ),
+                    backgroundImageOrder: .fade
                 )
+                
+                HStack {
+                    
+                    // Custom image, color and size
+                    SUIVPSwitch(
+                        isOn: $isOn,
+                        widgetSize: CGSize(width: 100, height: 60),
+                        widgetForegroundMargin: 6,
+                        state_on: SUIVPSwitch.SUIVPSwitchState(
+                            backgroundImage: .init("f_switch_bg_moon"),
+                            backgroundColor: .init(red: 29.0/255.0, green: 32.0/255.0, blue: 47.0/255.0),
+                            foregroundImage: .init("f_switch_button_moon"),
+                            foregroundColor: .init(red: 203.0/255.0, green: 207.0/255.0, blue: 215.0/255.0)
+                        ),
+                        state_off: SUIVPSwitch.SUIVPSwitchState(
+                            backgroundImage: .init("f_switch_bg_sun"),
+                            backgroundColor: .init(red: 71.0/255.0, green: 125.0/255.0, blue: 182.0/255.0),
+                            foregroundImage: .init("f_switch_button_sun"),
+                            foregroundColor: .init(red: 244.0/255.0, green: 201.0/255.0, blue: 81.0/255.0)
+                        ),
+                        backgroundImageOrder: .horizontal
+                    )
+                    
+                    
+                    // Custom image, color and size
+                    SUIVPSwitch(
+                        isOn: $isOn,
+                        widgetSize: CGSize(width: 100, height: 60),
+                        widgetForegroundMargin: 6,
+                        state_on: SUIVPSwitch.SUIVPSwitchState(
+                            backgroundImage: .init("f_switch_bg_moon"),
+                            backgroundColor: .init(red: 29.0/255.0, green: 32.0/255.0, blue: 47.0/255.0),
+                            foregroundImage: .init("f_switch_button_moon"),
+                            foregroundColor: .init(red: 203.0/255.0, green: 207.0/255.0, blue: 215.0/255.0)
+                        ),
+                        state_off: SUIVPSwitch.SUIVPSwitchState(
+                            backgroundImage: .init("f_switch_bg_sun"),
+                            backgroundColor: .init(red: 71.0/255.0, green: 125.0/255.0, blue: 182.0/255.0),
+                            foregroundImage: .init("f_switch_button_sun"),
+                            foregroundColor: .init(red: 244.0/255.0, green: 201.0/255.0, blue: 81.0/255.0)
+                        ),
+                        backgroundImageOrder: .horizontalReversed
+                    )
+                    
+                }
+                HStack {
+
+                    // Custom image, color and size
+                    SUIVPSwitch(
+                        isOn: $isOn,
+                        widgetSize: CGSize(width: 100, height: 60),
+                        widgetForegroundMargin: 6,
+                        state_on: SUIVPSwitch.SUIVPSwitchState(
+                            backgroundImage: .init("f_switch_bg_moon"),
+                            backgroundColor: .init(red: 29.0/255.0, green: 32.0/255.0, blue: 47.0/255.0),
+                            foregroundImage: .init("f_switch_button_moon"),
+                            foregroundColor: .init(red: 203.0/255.0, green: 207.0/255.0, blue: 215.0/255.0)
+                        ),
+                        state_off: SUIVPSwitch.SUIVPSwitchState(
+                            backgroundImage: .init("f_switch_bg_sun"),
+                            backgroundColor: .init(red: 71.0/255.0, green: 125.0/255.0, blue: 182.0/255.0),
+                            foregroundImage: .init("f_switch_button_sun"),
+                            foregroundColor: .init(red: 244.0/255.0, green: 201.0/255.0, blue: 81.0/255.0)
+                        ),
+                        backgroundImageOrder: .vertical
+                    )
+
+                    
+                    // Custom image, color and size
+                    SUIVPSwitch(
+                        isOn: $isOn,
+                        widgetSize: CGSize(width: 100, height: 60),
+                        widgetForegroundMargin: 6,
+                        state_on: SUIVPSwitch.SUIVPSwitchState(
+                            backgroundImage: .init("f_switch_bg_moon"),
+                            backgroundColor: .init(red: 29.0/255.0, green: 32.0/255.0, blue: 47.0/255.0),
+                            foregroundImage: .init("f_switch_button_moon"),
+                            foregroundColor: .init(red: 203.0/255.0, green: 207.0/255.0, blue: 215.0/255.0)
+                        ),
+                        state_off: SUIVPSwitch.SUIVPSwitchState(
+                            backgroundImage: .init("f_switch_bg_sun"),
+                            backgroundColor: .init(red: 71.0/255.0, green: 125.0/255.0, blue: 182.0/255.0),
+                            foregroundImage: .init("f_switch_button_sun"),
+                            foregroundColor: .init(red: 244.0/255.0, green: 201.0/255.0, blue: 81.0/255.0)
+                        ),
+                        backgroundImageOrder: .verticalReversed
+                    )
+
+                }
 
                 
                 // Custom color only
@@ -84,7 +175,8 @@ struct ContentView: View {
                         backgroundColor: .init(red: 71.0/255.0, green: 125.0/255.0, blue: 182.0/255.0),
                         foregroundImage: nil,
                         foregroundColor: .init(red: 244.0/255.0, green: 201.0/255.0, blue: 81.0/255.0)
-                    )
+                    ),
+                    backgroundImageOrder: .fade
                 )
 
                 
@@ -105,7 +197,8 @@ struct ContentView: View {
                         backgroundColor: .init(red: 71.0/255.0, green: 125.0/255.0, blue: 182.0/255.0),
                         foregroundImage: nil,
                         foregroundColor: .init(red: 244.0/255.0, green: 201.0/255.0, blue: 81.0/255.0)
-                    )
+                    ),
+                    backgroundImageOrder: .fade
                 )
                 
                 

@@ -12,32 +12,18 @@ import SwiftUI
 
 
 @available(iOS 14.0, *)
-public class SUIVPSwitchController : ObservableObject {
+public struct SUIVPSwitch: View {
+
+    @Binding var isOn: Bool
+    
     public enum BackgroundImageOrder {
+        case fade
         case horizontal
         case vertical
         case horizontalReversed
         case verticalReversed
     }
-    
-    
-    
-    func initialize() {
 
-    }
-    
-    func uninitialize() {
-
-    }
-    
-    
-    
-}
-
-@available(iOS 14.0, *)
-public struct SUIVPSwitch: View {
-
-    @Binding var isOn: Bool
     
     public class SUIVPSwitchState {
         var backgroundImage: Image? = nil
@@ -76,6 +62,8 @@ public struct SUIVPSwitch: View {
         foregroundImage: nil,
         foregroundColor: Color(red: 0.9, green: 0.9, blue: 0.9)
     )
+    
+    var backgroundImageOrder : BackgroundImageOrder = .fade
 
     @available(iOS 14.0, *)
     public struct Background: View {
@@ -99,7 +87,6 @@ public struct SUIVPSwitch: View {
         
     }
     
-    @StateObject var switchObs = SUIVPSwitchController()
     
     
     public init(
@@ -123,13 +110,15 @@ public struct SUIVPSwitch: View {
         widgetSize: CGSize?,
         widgetForegroundMargin: CGFloat?,
         state_on: SUIVPSwitchState?,
-        state_off: SUIVPSwitchState?
+        state_off: SUIVPSwitchState?,
+        backgroundImageOrder: BackgroundImageOrder
     ) {
         self._isOn = isOn
         if let e = widgetSize { self.widgetSize = e }
         if let e = widgetForegroundMargin { self.widgetForegroundMargin = e }
         if let e = state_on { self.state_on = e }
         if let e = state_off { self.state_off = e }
+        self.backgroundImageOrder = backgroundImageOrder
     }
     
     
@@ -143,7 +132,8 @@ public struct SUIVPSwitch: View {
                     widgetSize: widgetSize,
                     widgetForegroundMargin: widgetForegroundMargin,
                     state_on: state_on,
-                    state_off: state_off
+                    state_off: state_off,
+                    backgroundImageOrder: backgroundImageOrder
                 )
             }
         }
@@ -172,6 +162,65 @@ struct SliderView: View {
         var height: CGFloat
         var state_on: SUIVPSwitch.SUIVPSwitchState
         var state_off: SUIVPSwitch.SUIVPSwitchState
+        var backgroundImageOrder : SUIVPSwitch.BackgroundImageOrder
+        
+        func getBgOffsetForOff() -> CGSize {
+            if backgroundImageOrder == .horizontal {
+                return CGSize(
+                    width: width * -position,
+                    height: 0
+                )
+            }
+            if backgroundImageOrder == .horizontalReversed {
+                return CGSize(
+                    width: width * +position,
+                    height: 0
+                )
+            }
+            if backgroundImageOrder == .vertical {
+                return CGSize(
+                    width: 0,
+                    height: height * -position
+                )
+            }
+            if backgroundImageOrder == .verticalReversed {
+                return CGSize(
+                    width: 0,
+                    height: height * +position
+                )
+            }
+            return .zero
+        }
+        
+        func getBgOffsetForOn() -> CGSize {
+            if backgroundImageOrder == .horizontal {
+                return CGSize(
+                    width: width + (width * -position),
+                    height: 0
+                )
+            }
+            if backgroundImageOrder == .horizontalReversed {
+                return CGSize(
+                    width: -width + (width * +position),
+                    height: 0
+                )
+            }
+            if backgroundImageOrder == .vertical {
+                return CGSize(
+                    width: 0,
+                    height: height + (height * -position)
+                )
+            }
+            if backgroundImageOrder == .verticalReversed {
+                return CGSize(
+                    width: 0,
+                    height: -height + (height * +position)
+                )
+            }
+            return .zero
+        }
+        
+        
 
         var body: some View {
             ZStack {
@@ -206,27 +255,67 @@ struct SliderView: View {
                             )
                     )
                 
-                if let img = state_off.backgroundImage {
-                    img.resizable()
-                        .scaledToFill()
-                        .opacity(Double(1.0 - position))
-                        .frame(minWidth: 0, maxWidth: .infinity,
-                               minHeight: 0, maxHeight: .infinity)
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: width)
-                        )
-                }
+                ZStack {
+
+                    if backgroundImageOrder == .fade {
+                        
+                        if let img = state_off.backgroundImage {
+                            img.resizable(resizingMode: .stretch)
+                                .scaledToFill()
+                                .opacity(Double(1.0 - position))
+                                .cornerRadius(width)
+                                .frame(minWidth: 0, maxWidth: .infinity,
+                                       minHeight: 0, maxHeight: .infinity)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: width)
+                                )
+                        }
+                            
+                        if let img = state_on.backgroundImage {
+                            img.resizable(resizingMode: .stretch)
+                                .scaledToFill()
+                                .opacity(position)
+                                .cornerRadius(width)
+                                .frame(minWidth: 0, maxWidth: .infinity,
+                                       minHeight: 0, maxHeight: .infinity)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: width)
+                                )
+                        }
+                        
+                    } else {
+                        
+                        if let img = state_off.backgroundImage {
+                            img.resizable(resizingMode: .stretch)
+                                .offset(getBgOffsetForOff())
+                                .cornerRadius(width)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: width)
+                                )
+                                .frame(minWidth: 0, maxWidth: .infinity,
+                                       minHeight: 0, maxHeight: .infinity)
+                        }
+                            
+                        if let img = state_on.backgroundImage {
+                            img.resizable(resizingMode: .stretch)
+                                .offset(getBgOffsetForOn())
+                                .cornerRadius(width)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: width)
+                                )
+                                .frame(minWidth: 0, maxWidth: .infinity,
+                                       minHeight: 0, maxHeight: .infinity)
+                        }
+                        
+                    }
                     
-                if let img = state_on.backgroundImage {
-                    img.resizable()
-                        .scaledToFill()
-                        .opacity(position)
-                        .frame(minWidth: 0, maxWidth: .infinity,
-                               minHeight: 0, maxHeight: .infinity)
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: width)
-                        )
                 }
+                .cornerRadius(width)
+                .clipShape(
+                    RoundedRectangle(cornerRadius: width)
+                )
+
+
 
             }
             .animation(.easeInOut)
@@ -242,7 +331,8 @@ struct SliderView: View {
         var height: CGFloat
         var state_on: SUIVPSwitch.SUIVPSwitchState
         var state_off: SUIVPSwitch.SUIVPSwitchState
-        @State var imgRes: UIImage?
+        var backgroundImageOrder : SUIVPSwitch.BackgroundImageOrder
+//        @State var imgRes: UIImage?
 
         var body: some View {
             ZStack {
@@ -334,6 +424,7 @@ struct SliderView: View {
     var widgetForegroundMargin: CGFloat
     var state_on: SUIVPSwitch.SUIVPSwitchState
     var state_off: SUIVPSwitch.SUIVPSwitchState
+    var backgroundImageOrder : SUIVPSwitch.BackgroundImageOrder
     
     
     var body: some View {
@@ -355,7 +446,8 @@ struct SliderView: View {
                         width: geometry.size.width,
                         height: geometry.size.height,
                         state_on: state_on,
-                        state_off: state_off
+                        state_off: state_off,
+                        backgroundImageOrder: backgroundImageOrder
                     )
 
                     ZStack {
@@ -368,7 +460,8 @@ struct SliderView: View {
                                     width: widgetForegroundIconSize,
                                     height: widgetForegroundIconSize,
                                     state_on: state_on,
-                                    state_off: state_off
+                                    state_off: state_off,
+                                    backgroundImageOrder: backgroundImageOrder
                                 )
                             }
                                 .offset(x: newPositionLimited)
