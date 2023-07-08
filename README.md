@@ -4,7 +4,6 @@ This package was inspired by an Instagram post: https://www.instagram.com/reel/C
 
 Yet another SwiftUI Toggle, but fully customizable!
 
-https://github.com/VansonLeung/SwiftUI-VPSwitch/assets/1129695/b2e8783f-2d11-4f7e-9015-a9a9a1edb8cb
 
 
 
