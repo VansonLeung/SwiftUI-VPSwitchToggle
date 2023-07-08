@@ -37,6 +37,7 @@ public class SUIVPSwitchController : ObservableObject {
 @available(iOS 14.0, *)
 public struct SUIVPSwitch: View {
 
+    @Binding var isOn: Bool
     
     public class SUIVPSwitchState {
         var backgroundImage: Image? = nil
@@ -71,9 +72,9 @@ public struct SUIVPSwitch: View {
     
     var state_off: SUIVPSwitchState = .init(
         backgroundImage: nil,
-        backgroundColor: Color(red: 0.6, green: 0.6, blue: 0.6),
+        backgroundColor: Color(red: 0.75, green: 0.75, blue: 0.75),
         foregroundImage: nil,
-        foregroundColor: Color(red: 0.3, green: 0.3, blue: 0.3)
+        foregroundColor: Color(red: 0.9, green: 0.9, blue: 0.9)
     )
 
     @available(iOS 14.0, *)
@@ -100,24 +101,31 @@ public struct SUIVPSwitch: View {
     
     @StateObject var switchObs = SUIVPSwitchController()
     
-    public init() {
-        
+    
+    public init(
+        isOn: Binding<Bool>
+    ) {
+        self._isOn = isOn
     }
     
     public init(
+        isOn: Binding<Bool>,
         widgetSize: CGSize?,
         widgetForegroundMargin: CGFloat?
     ) {
+        self._isOn = isOn
         if let e = widgetSize { self.widgetSize = e }
         if let e = widgetForegroundMargin { self.widgetForegroundMargin = e }
     }
     
     public init(
+        isOn: Binding<Bool>,
         widgetSize: CGSize?,
         widgetForegroundMargin: CGFloat?,
         state_on: SUIVPSwitchState?,
         state_off: SUIVPSwitchState?
     ) {
+        self._isOn = isOn
         if let e = widgetSize { self.widgetSize = e }
         if let e = widgetForegroundMargin { self.widgetForegroundMargin = e }
         if let e = state_on { self.state_on = e }
@@ -131,6 +139,7 @@ public struct SUIVPSwitch: View {
         ZStack {
             VStack(spacing: 0) {
                 SliderView(
+                    isOn: $isOn,
                     widgetSize: widgetSize,
                     widgetForegroundMargin: widgetForegroundMargin,
                     state_on: state_on,
@@ -257,17 +266,41 @@ struct SliderView: View {
     //                        RoundedRectangle(cornerRadius: width)
     //                    )
                     
-                    if let image = imgRes {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: width,
-                                   height: height)
-                            .mask(
-                                RoundedRectangle(cornerRadius: width)
-                                )
-                    }
+//                    if let image = imgRes {
+//                        Image(uiImage: image)
+//                            .resizable()
+//                            .scaledToFill()
+//                            .frame(width: width,
+//                                   height: height)
+//                            .mask(
+//                                RoundedRectangle(cornerRadius: width)
+//                                )
+//                    }
 
+                    
+                    
+                    if let img = state_off.foregroundImage {
+                        img.resizable()
+                            .scaledToFill()
+                            .opacity(Double(1.0 - position))
+                            .frame(minWidth: 0, maxWidth: .infinity,
+                                   minHeight: 0, maxHeight: .infinity)
+                            .clipShape(
+                                RoundedRectangle(cornerRadius: width)
+                            )
+                    }
+                        
+                    if let img = state_on.foregroundImage {
+                        img.resizable()
+                            .scaledToFill()
+                            .opacity(position)
+                            .frame(minWidth: 0, maxWidth: .infinity,
+                                   minHeight: 0, maxHeight: .infinity)
+                            .clipShape(
+                                RoundedRectangle(cornerRadius: width)
+                            )
+                    }
+                    
                     
                 }
                 .mask(
@@ -280,11 +313,11 @@ struct SliderView: View {
             .animation(.easeInOut)
             .onAppear {
                 
-                if let path = Bundle.module.path(forResource: "foreground_overlay_bw", ofType: "png"),
-                    let image = UIImage(contentsOfFile: path)
-                {
-                    imgRes = image
-                }
+//                if let path = Bundle.module.path(forResource: "foreground_overlay_bw", ofType: "png"),
+//                    let image = UIImage(contentsOfFile: path)
+//                {
+//                    imgRes = image
+//                }
                 
             }
         }
@@ -296,10 +329,12 @@ struct SliderView: View {
     @State private var position: CGFloat = 0
     @State private var isDragging = false
     
+    @Binding var isOn: Bool
     var widgetSize: CGSize
     var widgetForegroundMargin: CGFloat
     var state_on: SUIVPSwitch.SUIVPSwitchState
     var state_off: SUIVPSwitch.SUIVPSwitchState
+    
     
     var body: some View {
         ZStack {
@@ -341,14 +376,14 @@ struct SliderView: View {
                                     DragGesture()
                                         .updating($dragOffset) { value, state, _ in
                                             state = value.translation
-                                            print(value.translation)
+//                                            print(value.translation)
                                             //                            position = min(max(newPosition, 0), dragWidth)
                                             //                            isDragging = true
                                         }
                                         .onEnded { value in
 //                                            withAnimation {
-                                                position = value.translation.width > 0 ? dragWidth : 0
-                                                isDragging = false
+                                            isDragging = false
+                                            isOn = value.translation.width > 0 ? true : false
 //                                            }
                                         }
                                 )
@@ -375,13 +410,16 @@ struct SliderView: View {
                 .gesture(
                     TapGesture()
                         .onEnded {
-                            print("XX")
+                            
 //                                            withAnimation(.easeInOut) {
-                                position = position > 0 ? 0 : dragWidth
-                                isDragging = false
+                            isDragging = false
+                            isOn = position > 0 ? false : true
 //                                            }
                         }
                 )
+                .onChange(of: isOn) { newValue in
+                    position = newValue ? dragWidth : 0
+                }
 
 
             }
@@ -399,6 +437,9 @@ struct SliderView: View {
 
 @available(iOS 14.0, *)
 struct ContentView: View {
+    
+    @State var isOn: Bool = false
+    
     var body: some View {
         VStack {
             Text("Drag the slider")
@@ -406,7 +447,7 @@ struct ContentView: View {
                 .padding()
             
             SUIVPSwitch(
-                
+                isOn: $isOn
             )
         }
     }
