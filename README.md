@@ -2,7 +2,7 @@
 
 This package was inspired by an Instagram post: https://www.instagram.com/reel/Criem1rLI9P/?igshid=YzcxN2Q2NzY0OA%3D%3D
 
-Yet another SwiftUI Switch, but fully customizable!
+Yet another SwiftUI Toggle, but fully customizable!
 
 https://github.com/VansonLeung/SwiftUI-VPSwitch/assets/1129695/b2e8783f-2d11-4f7e-9015-a9a9a1edb8cb
 
