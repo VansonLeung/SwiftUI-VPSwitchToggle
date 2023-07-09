@@ -6,6 +6,13 @@ Yet another SwiftUI Toggle, but fully customizable!
 
 Supports iOS 14 or above
 
+Supports the following background transition animations:
+ - Fade
+ - Horizontal
+ - HorizontalReverse
+ - Vertical
+ - VerticalReverse
+
 
 https://github.com/VansonLeung/SwiftUI-VPSwitch/assets/1129695/37fbcb12-5648-4803-bc32-ae9d90ce415d
 
