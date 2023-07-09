@@ -1,4 +1,4 @@
-# SwiftUI-VPSwitch
+# SwiftUI-VPSwitchToggle
 
 This package was inspired by an Instagram post: https://www.instagram.com/reel/Criem1rLI9P/?igshid=YzcxN2Q2NzY0OA%3D%3D
 
