@@ -23,7 +23,7 @@ https://github.com/VansonLeung/SwiftUI-VPSwitch/assets/1129695/37fbcb12-5648-480
 
 Install Swift Package in SPM, URL:
 
-`.package(url: "https://github.com/VansonLeung/SwiftUI-VPSwitch.git", from: "1.0.0")`
+`.package(url: "https://github.com/VansonLeung/SwiftUI-VPSwitchToggle.git", from: "1.0.0")`
 
 
 
