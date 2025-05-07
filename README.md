@@ -2,6 +2,10 @@
 
 This package was inspired by an Instagram post: https://www.instagram.com/reel/Criem1rLI9P/?igshid=YzcxN2Q2NzY0OA%3D%3D
 
+|<img width="338" alt="螢幕截圖 2025-05-08 上午12 48 00" src="https://github.com/user-attachments/assets/2c8863b3-5e01-4283-b682-7dfdc0f8f131" />|<img width="338" alt="螢幕截圖 2025-05-08 上午12 48 04" src="https://github.com/user-attachments/assets/1c5015bb-2c5c-4a31-86f3-a88b7428514d" />|
+|--|--|
+
+
 Yet another SwiftUI Toggle, but fully customizable!
 
 Supports iOS 14 or above
